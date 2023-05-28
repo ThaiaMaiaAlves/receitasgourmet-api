@@ -1,8 +1,8 @@
 const connection = {
+    host: 'localhost',
+    port: 3306,
     user: 'root',
     password: '123456',
-    server: 'localhost',
-    port: 3306,
     database: 'BD_APLICATIVO'
 }
 
