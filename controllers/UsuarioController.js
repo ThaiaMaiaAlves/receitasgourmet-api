@@ -1,10 +1,10 @@
 const { knex } = require("../database");
 
-//get = ler tabela usuario
+//get = ler tabela usuarios
 exports.get = async (req, res, next) => {
     try {
         const result = await
-            knex.select('*').from('usuario')
+            knex.select('*').from('usuarios')
         res.json(result);
 
     } catch (err) {
@@ -19,7 +19,7 @@ exports.getByEmail = async (req, res, next) => {
     const email = req.body.email;
     try {
         const result = await
-            knex.select('*').from('usuario').where('email', email)
+            knex.select('*').from('usuarios').where('email', email)
         res.json(result);
 
     } catch (err) {
@@ -32,8 +32,7 @@ exports.post = async (req, res, next) => {
     let usuario = req.body;
     try {
         const result = await
-            knex('usuario')
-                .returning('id')
+            knex('usuarios')
                 .insert(usuario);
 
         res.json(result);
@@ -49,8 +48,7 @@ exports.put = async (req, res, next) => {
     let id = req.params.id
     try {
         const result = await
-            knex('usuario')
-                .returning('id')
+            knex('usuarios')
                 .where('id', id)
                 .update(usuario);
 
@@ -65,8 +63,7 @@ exports.delete = async (req, res, next) => {
     let id = req.params.id;
     try {
         const result = await
-            knex('usuario')
-                .returning('id')
+            knex('usuarios')
                 .where('id', id)
                 .del();
 

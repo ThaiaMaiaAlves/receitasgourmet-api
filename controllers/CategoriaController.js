@@ -4,7 +4,7 @@ const { knex } = require("../database");
 exports.get = async (req, res, next) => {
     try {
         const result = await
-            knex.select('*').from('categoria')
+            knex.select('*').from('categorias')
         res.json(result);
 
     } catch (err) {
@@ -19,7 +19,7 @@ exports.getById = async (req, res, next) => {
     const cod_categoria = req.body.cod_categoria;
     try {
         const result = await
-            knex.select('*').from('categoria').where('cod_categoria', cod_categoria)
+            knex.select('*').from('categorias').where('cod_categoria', cod_categoria)
         res.json(result);
 
     } catch (err) {
@@ -33,7 +33,7 @@ exports.post = async (req, res, next) => {
 
     try {
         await knex.transaction(function (trx) {
-            knex('categoria')
+            knex('categorias')
                 .transacting(trx)
                 .insert(categoria)
                 .then(trx.commit)
@@ -42,7 +42,7 @@ exports.post = async (req, res, next) => {
         })
     } catch (err) {
         console.log(err);
-        res.status(500).send('Erro ao tentar inserir novo categoria');
+        res.status(500).send('Erro ao tentar inserir nova categoria');
     }
 };
 // put = alterar categoria
@@ -51,7 +51,7 @@ exports.put = async (req, res, next) => {
     let cod_categoria = req.params.id
     try {
         const result = await
-            knex('categoria')
+            knex('categorias')
                 .transacting(trx)
                 .returning('cod_categoria')
                 .where('cod_categoria', cod_categoria)
@@ -70,7 +70,7 @@ exports.delete = async (req, res, next) => {
     let cod_categoria = req.params.id;
     try {
         const result = await
-            knex('categoria')
+            knex('categorias')
                 .returning('cod_categoria')
                 .where('cod_categoria', cod_categoria)
                 .del();

@@ -3,16 +3,17 @@
 // O bcrypt compara o senha e o jsonwebtoken é para criar um token de autenticação
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { default: knex } = require('knex');
+const { knex } = require('../database');
 
 const login = async (req, res) => {
-  const {email,senha} = req.body;
+  const { email, senha } = req.body;
+  
   try {
-    const usuario = await
-      knex
-        .select('*')
-        .from('usuario')
-        .where('email', email);
+    const usuarios = await
+      knex('usuarios')        
+        .where('email', 'like', email);
+
+    const usuario = usuarios[0]
 
     if (!usuario) {
       res
@@ -49,7 +50,7 @@ const login = async (req, res) => {
         }
       })
 
-    } catch (err) {
+  } catch (err) {
     console.error(err);
     res
       .status(500)
@@ -61,24 +62,24 @@ const login = async (req, res) => {
 };
 
 const verifyToken = (req, res, next) => {
-  
+
   const tokenHeader = req.headers['authorization'];
   const token = tokenHeader && tokenHeader.slipt(' ')[1];
 
-  if(!token){
+  if (!token) {
     res
-    .status(403)
-    .json({
-      statusCode: 403,
-      message: 'Não autorizado!'
-    });
+      .status(403)
+      .json({
+        statusCode: 403,
+        message: 'Não autorizado!'
+      });
   }
 
   try {
 
     jwt.verify(token, 'ReceitasGourmetValid');
     next();
-    
+
   } catch (err) {
     console.error(err);
     res

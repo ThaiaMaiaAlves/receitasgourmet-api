@@ -4,7 +4,7 @@ const { knex } = require("../database");
 exports.get = async (req, res, next) => {
     try {
         const result = await
-            knex.select('*').from('receita')
+            knex.select('*').from('receitas')
         res.json(result);
 
     } catch (err) {
@@ -19,7 +19,7 @@ exports.getById = async (req, res, next) => {
     const cod_receita = req.body.cod_receita;
     try {
         const result = await
-            knex.select('*').from('receita').where('cod_receita', cod_receita)
+            knex.select('*').from('receitas').where('cod_receita', cod_receita)
         res.json(result);
 
     } catch (err) {
@@ -32,7 +32,7 @@ exports.post = async (req, res, next) => {
     let receita = req.body;
 
     knex.transaction(function (trx) {
-        knex('receita')
+        knex('receitas')
             .transacting(trx)
             .insert(receita)
             .then(trx.commit)
@@ -53,7 +53,7 @@ exports.put = async (req, res, next) => {
     let cod_receita = req.params.id
 
     knex.transaction(function (trx) {
-        knex('receita')
+        knex('receitas')
             .transacting(trx)
             .where('cod_receita', cod_receita)
             .update(receita)
@@ -72,7 +72,7 @@ exports.delete = async (req, res, next) => {
     let cod_receita = req.params.id;
     try {
         const result = await
-            knex('receita')
+            knex('receitas')
                 .where('cod_receita', cod_receita)
                 .del();
 

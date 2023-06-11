@@ -3,7 +3,7 @@ const connection = {
     port: 3306,
     user: 'root',
     password: '123456',
-    database: 'BD_APLICATIVO'
+    database: 'bd_receitas_gourmet'
 }
 
 const knex = require('knex')({

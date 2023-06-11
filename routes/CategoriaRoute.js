@@ -2,10 +2,10 @@ const CategoriaController = require('../controllers/CategoriaController');
 
 module.exports = (app) => {
 
-    app.get('/categoria', CategoriaController.get);
-    app.get('/categoria/:id', CategoriaController.getById);
-    app.post('/categoria', CategoriaController.post);
-    app.put('/categoria/:id', CategoriaController.put);
-    app.delete('/categoria/:id', CategoriaController.delete);
+    app.get('/categorias', CategoriaController.get);
+    app.get('/categorias/:id', CategoriaController.getById);
+    app.post('/categorias', CategoriaController.post);
+    app.put('/categorias/:id', CategoriaController.put);
+    app.delete('/categorias/:id', CategoriaController.delete);
 
 }

@@ -2,10 +2,10 @@ const ReceitaController = require('../controllers/ReceitaController');
 
 module.exports = (app) => {
 
-    app.get('/receita', ReceitaController.get);
-    app.get('/receita/:id', ReceitaController.getById);
-    app.post('/receita', ReceitaController.post);
-    app.put('/receita/:id', ReceitaController.put);
-    app.delete('/receita/:id', ReceitaController.delete);
+    app.get('/receitas', ReceitaController.get);
+    app.get('/receitas/:id', ReceitaController.getById);
+    app.post('/receitas', ReceitaController.post);
+    app.put('/receitas/:id', ReceitaController.put);
+    app.delete('/receitas/:id', ReceitaController.delete);
 
 }
