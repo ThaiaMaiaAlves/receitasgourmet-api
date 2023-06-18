@@ -15,6 +15,20 @@ exports.get = async (req, res, next) => {
 
 // get by id
 // async = é uma função assíncrona 
+exports.getById = async (req, res, next) => {
+    const cod_usuario = req.params.id;
+    try {
+        const result = await
+            knex.select('*').from('usuarios').where('cod_usuario', cod_usuario)
+        res.json(result);
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(`Erro ao buscar usuário - ${cod_usuario} `);
+    }
+};
+// get by email
+// async = é uma função assíncrona 
 exports.getByEmail = async (req, res, next) => {
     const email = req.body.email;
     try {
@@ -49,7 +63,7 @@ exports.put = async (req, res, next) => {
     try {
         const result = await
             knex('usuarios')
-                .where('id', id)
+                .where('cod_usuario', id)
                 .update(usuario);
 
         res.json(result);
@@ -64,7 +78,7 @@ exports.delete = async (req, res, next) => {
     try {
         const result = await
             knex('usuarios')
-                .where('id', id)
+                .where('cod_usuario', id)
                 .del();
 
         res.json(result);

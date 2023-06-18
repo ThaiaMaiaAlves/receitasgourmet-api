@@ -4,7 +4,7 @@ const { knex } = require("../database");
 exports.get = async (req, res, next) => {
     try {
         const result = await
-            knex.select('*').from('un_medida')
+            knex.select('*').from('un_medidas')
         res.json(result);
 
     } catch (err) {
@@ -19,7 +19,7 @@ exports.getById = async (req, res, next) => {
     const cod_un_medida = req.body.cod_un_medida;
     try {
         const result = await
-            knex.select('*').from('un_medida').where('cod_un_medida', cod_un_medida)
+            knex.select('*').from('un_medidas').where('cod_un_medida', cod_un_medida)
         res.json(result);
 
     } catch (err) {
@@ -29,10 +29,10 @@ exports.getById = async (req, res, next) => {
 };
 
 exports.post = async (req, res, next) => {
-    let receita = req.body;
+    let un_medida = req.body;
 
     knex.transaction(function (trx) {
-        knex('un_medida')
+        knex('un_medidas')
             .transacting(trx)
             .insert(un_medida)
             .then(trx.commit)
@@ -53,7 +53,7 @@ exports.put = async (req, res, next) => {
     let cod_un_medida = req.params.id
 
     knex.transaction(function (trx) {
-        knex('un_medida')
+        knex('un_medidas')
             .transacting(trx)
             .where('cod_un_medida', cod_un_medida)
             .update(un_medida)
@@ -72,7 +72,7 @@ exports.delete = async (req, res, next) => {
     let cod_un_medida = req.params.id;
     try {
         const result = await
-            knex('un_medida')
+            knex('un_medidas')
                 .where('cod_un_medida', cod_un_medida)
                 .del();
 
@@ -80,6 +80,6 @@ exports.delete = async (req, res, next) => {
 
     } catch (err) {
         console.log(err);
-        res.status(500).send('Erro ao tentar deletar unidade de');
+        res.status(500).send('Erro ao tentar deletar unidade de medida');
     }
 };

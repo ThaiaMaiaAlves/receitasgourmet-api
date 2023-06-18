@@ -16,10 +16,10 @@ exports.get = async (req, res, next) => {
 // get by id
 // async = é uma função assíncrona 
 exports.getById = async (req, res, next) => {
-    const cod_categoria = req.body.cod_categoria;
+    const { id } = req.params;
     try {
         const result = await
-            knex.select('*').from('categorias').where('cod_categoria', cod_categoria)
+            knex.select('*').from('categorias').where('cod_categoria', id)
         res.json(result);
 
     } catch (err) {
@@ -52,12 +52,8 @@ exports.put = async (req, res, next) => {
     try {
         const result = await
             knex('categorias')
-                .transacting(trx)
-                .returning('cod_categoria')
                 .where('cod_categoria', cod_categoria)
-                .update(categoria)
-                .then(trx.commit)
-                .catch(trx.rollback);
+                .update(categoria);
 
         res.json(result);
 
