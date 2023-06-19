@@ -6,8 +6,8 @@ const api = express();
 api.use(express.json());
 api.use(cors());
 
-api.listen(8080, () => {
-    console.log('Api rodando - localhost: 8080');
+api.listen(8000, () => {
+    console.log('Api rodando - localhost: 8000');
 });
 
 require('./routes/index')(api);

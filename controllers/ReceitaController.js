@@ -39,7 +39,7 @@ exports.post = async (req, res, next) => {
             .catch(trx.rollback);
     })
         .then(function (result) {
-            res.send(result)
+            res.status(200).send(result)
         })
         .catch(function (err) {
             console.log(err);

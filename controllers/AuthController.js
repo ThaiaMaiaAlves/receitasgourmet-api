@@ -7,7 +7,7 @@ const { knex } = require('../database');
 
 const login = async (req, res) => {
   const { email, senha } = req.body;
-  
+
   try {
     const usuarios = await
       knex('usuarios')        
@@ -16,7 +16,7 @@ const login = async (req, res) => {
     const usuario = usuarios[0]
 
     if (!usuario) {
-      res
+      return res
         .status(401)
         .json({
           statusCode: 401,
@@ -30,7 +30,7 @@ const login = async (req, res) => {
     const validaSenha = bcrypt.compareSync(senha, usuario.senha);
 
     if (!validaSenha) {
-      res
+      return res
         .status(401)
         .json({
           statusCode: 401,
@@ -40,7 +40,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ name: usuario.nome }, 'ReceitasGourmetValid');
 
-    res
+    return res
       .status(200)
       .json({
         statusCode: 200,
@@ -52,7 +52,7 @@ const login = async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    res
+    return res
       .status(500)
       .json({
         statusCode: 500,
@@ -67,7 +67,7 @@ const verifyToken = (req, res, next) => {
   const token = tokenHeader && tokenHeader.slipt(' ')[1];
 
   if (!token) {
-    res
+    return res
       .status(403)
       .json({
         statusCode: 403,
@@ -82,7 +82,7 @@ const verifyToken = (req, res, next) => {
 
   } catch (err) {
     console.error(err);
-    res
+    return res
       .status(500)
       .json({
         statusCode: 500,

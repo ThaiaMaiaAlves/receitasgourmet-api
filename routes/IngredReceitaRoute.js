@@ -1,4 +1,4 @@
-const IngredReceitaController = require('../controllers/IngredientesController');
+const IngredReceitaController = require('../controllers/IngredReceitaController');
 
 module.exports = (app) => {
 
