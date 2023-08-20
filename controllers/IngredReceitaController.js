@@ -9,7 +9,7 @@ exports.get = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    res.status(500).send('Erro ao buscar ingredientes da receita');
+    res.send('Erro ao buscar ingredientes da receita');
   }
 };
 
@@ -24,7 +24,7 @@ exports.getById = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    res.status(500).send(`Erro ao buscar ingred_receitas - ${cod_ingred_receita} `);
+    res.send(`Erro ao buscar ingred_receitas - ${cod_ingred_receita} `);
   }
 };
 
@@ -46,10 +46,11 @@ exports.post = async (req, res, next) => {
     })
       .then(function (result) {
         res.send(result)
+        next()
       })
       .catch(function (err) {
         console.log(err);
-        res.status(500).send('Erro ao tentar inserir novo ingrediente na receita');
+        res.send('Erro ao tentar inserir novo ingrediente na receita');
       })
   })
 
@@ -73,7 +74,7 @@ exports.put = async (req, res, next) => {
     })
     .catch(function (err) {
       console.log(err);
-      res.sendStatus(500).send('Erro ao tentar alterar ingrediente da receita');
+      res.send('Erro ao tentar alterar ingrediente da receita');
     })
 };
 exports.delete = async (req, res, next) => {
@@ -88,6 +89,6 @@ exports.delete = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    res.status(500).send('Erro ao tentar deletar ingrediente da receita');
+    res.send('Erro ao tentar deletar ingrediente da receita');
   }
 };

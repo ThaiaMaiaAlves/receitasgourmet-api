@@ -1,4 +1,6 @@
 const { knex } = require("../database");
+const bcrypt = require('bcrypt');
+
 
 //get = ler tabela usuarios
 exports.get = async (req, res, next) => {
@@ -44,6 +46,9 @@ exports.getByEmail = async (req, res, next) => {
 
 exports.post = async (req, res, next) => {
     let usuario = req.body;
+    
+    usuario.senha = await bcrypt.hash(usuario.senha, 10)
+
     try {
         const result = await
             knex('usuarios')

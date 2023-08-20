@@ -46,7 +46,8 @@ const login = async (req, res) => {
         statusCode: 200,
         message: 'Login realizado com sucesso!',
         data: {
-          token
+          token,
+          usuario
         }
       })
 
