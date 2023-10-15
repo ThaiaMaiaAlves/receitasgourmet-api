@@ -5,11 +5,15 @@ exports.get = async (req, res, next) => {
     try {
         const result = await
             knex.select('*').from('categorias')
+            // {msg: 'This is CORS-enabled for all origins!'}
+            
         res.json(result);
 
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao buscar categoria');
+    } finally {
+        next()
     }
 };
 
@@ -25,7 +29,10 @@ exports.getById = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send(`Erro ao buscar categoria - ${cod_categoria} `);
+    } finally {
+        next()
     }
+
 };
 
 exports.post = async (req, res, next) => {
@@ -43,6 +50,8 @@ exports.post = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar inserir nova categoria');
+    } finally {
+        next()
     }
 };
 // put = alterar categoria
@@ -60,6 +69,8 @@ exports.put = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar alterar categoria');
+    } finally {
+        next()
     }
 };
 exports.delete = async (req, res, next) => {
@@ -76,5 +87,7 @@ exports.delete = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar deletar categoria');
+    } finally {
+        next()
     }
 };

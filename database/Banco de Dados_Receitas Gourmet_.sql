@@ -8,12 +8,14 @@ create table usuarios (
     email varchar(50) not null,
     senha varchar (8) not null,
 	telefone varchar(14) not null,
+	foto_usuario longblob
     primary key (cod_usuario)
 	);
     
 create table categorias (
 cod_categoria integer not null auto_increment,
 nome varchar (80) not null,
+foto_categoria longblob
 primary key (cod_categoria)
 );
 
@@ -34,10 +36,10 @@ create table receitas (
 cod_receita integer not null auto_increment,
 cod_usuario integer not null,
 cod_categoria integer,
-foto blob,
+foto longblob,
 nome_receita varchar (50),
 tempo_preparo integer,
-modo_preparo blob,
+modo_preparo longblob,
 status_receita varchar (30),
 primary key (cod_receita),
 foreign key (cod_categoria) references categorias (cod_categoria),

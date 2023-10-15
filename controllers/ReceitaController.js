@@ -10,6 +10,8 @@ exports.get = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao buscar receita');
+    } finally {
+        next()
     }
 };
 
@@ -25,6 +27,8 @@ exports.getById = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send(`Erro ao buscar receita - ${cod_receita} `);
+    } finally {
+        next()
     }
 };
 
@@ -44,6 +48,9 @@ exports.post = async (req, res, next) => {
         .catch(function (err) {
             console.log(err);
             res.status(500).send('Erro ao tentar inserir nova receita');
+        })
+        .finally(function () {
+            next()
         })
 
 };
@@ -67,6 +74,9 @@ exports.put = async (req, res, next) => {
             console.log(err);
             res.sendStatus(500).send('Erro ao tentar alterar receita');
         })
+        .finally(function () {
+            next()
+        })
 };
 exports.delete = async (req, res, next) => {
     let cod_receita = req.params.id;
@@ -81,5 +91,7 @@ exports.delete = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar deletar receita');
+    } finally {
+        next()
     }
 };

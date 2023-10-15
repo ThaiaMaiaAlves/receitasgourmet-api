@@ -5,11 +5,14 @@ exports.get = async (req, res, next) => {
     try {
         const result = await
             knex.select('*').from('ingredientes')
+            // {msg: 'This is CORS-enabled for all origins!'}
         res.json(result);
 
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao buscar ingredientes');
+    } finally {
+        next()
     }
 };
 
@@ -19,12 +22,14 @@ exports.getById = async (req, res, next) => {
     const { id } = req.params;
     try {
         const result = await
-            knex.select('*').from('ingredientes').where('cod_ingredientes', id)
+            knex.select('*').from('ingredientes').where('cod_ingrediente', id)
         res.json(result);
 
     } catch (err) {
         console.log(err);
         res.status(500).send(`Erro ao buscar ingredientes - ${cod_ingredientes} `);
+    } finally {
+        next()
     }
 };
 
@@ -74,5 +79,7 @@ exports.delete = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar deletar ingredientes');
+    } finally {
+        next()
     }
 };

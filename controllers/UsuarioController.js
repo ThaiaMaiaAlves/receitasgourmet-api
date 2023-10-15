@@ -1,7 +1,6 @@
 const { knex } = require("../database");
 const bcrypt = require('bcrypt');
 
-
 //get = ler tabela usuarios
 exports.get = async (req, res, next) => {
     try {
@@ -12,6 +11,8 @@ exports.get = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao buscar usuários');
+    } finally {
+        next()
     }
 };
 
@@ -39,15 +40,16 @@ exports.getByEmail = async (req, res, next) => {
         res.json(result);
 
     } catch (err) {
-        console.log(err);
         res.status(500).send(`Erro ao buscar usuário - ${email} `);
+    } finally {
+        next()
     }
 };
 
 exports.post = async (req, res, next) => {
     let usuario = req.body;
-    
-    usuario.senha = await bcrypt.hash(usuario.senha, 10)
+    //usuario.senha = await bcrypt.hash(usuario.senha, 10)
+    usuario.senha = usuario.senha
 
     try {
         const result = await
@@ -59,6 +61,8 @@ exports.post = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar inserir novo usuário');
+    } finally {
+        next()
     }
 };
 // put = alterar usuário
@@ -76,6 +80,8 @@ exports.put = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar alterar usuário');
+    } finally {
+        next()
     }
 };
 exports.delete = async (req, res, next) => {
@@ -91,10 +97,13 @@ exports.delete = async (req, res, next) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Erro ao tentar deletar usuário');
+    } finally {
+        next()
     }
 };
 
 exports.authRoute = async (req, res, next) => {
+    console.log('Tentando autenticar', res);
     res.status(200)
         .json({
             statusCode: 200,

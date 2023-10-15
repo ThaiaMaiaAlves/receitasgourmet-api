@@ -10,6 +10,8 @@ exports.get = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.send('Erro ao buscar ingredientes da receita');
+  } finally {
+    next()
   }
 };
 
@@ -25,6 +27,8 @@ exports.getById = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.send(`Erro ao buscar ingred_receitas - ${cod_ingred_receita} `);
+  } finally {
+    next()
   }
 };
 
@@ -51,6 +55,8 @@ exports.post = async (req, res, next) => {
       .catch(function (err) {
         console.log(err);
         res.send('Erro ao tentar inserir novo ingrediente na receita');
+      }).finally(function () {
+        next()
       })
   })
 

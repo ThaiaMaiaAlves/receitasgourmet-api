@@ -59,6 +59,8 @@ const login = async (req, res) => {
         statusCode: 500,
         message: err.message
       });
+  } finally {
+    next()
   }
 };
 
