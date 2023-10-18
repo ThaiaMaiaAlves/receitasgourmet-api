@@ -18,15 +18,15 @@ exports.get = async (req, res, next) => {
 // get by id
 // async = é uma função assíncrona 
 exports.getById = async (req, res, next) => {
-    const cod_un_medida = req.body.cod_un_medida;
+    const { id } = req.params;
     try {
         const result = await
-            knex.select('*').from('un_medidas').where('cod_un_medida', cod_un_medida)
+            knex.select('*').from('un_medidas').where('cod_un_medida', id)
         res.json(result);
 
     } catch (err) {
         console.log(err);
-        res.status(500).send(`Erro ao buscar unidade de medida - ${cod_un_medida} `);
+        res.status(500).send(`Erro ao buscar unidade de medida - ${id} `);
     } finally {
         next()
     }

@@ -50,7 +50,6 @@ exports.post = async (req, res, next) => {
     })
       .then(function (result) {
         res.send(result)
-        next()
       })
       .catch(function (err) {
         console.log(err);
@@ -59,7 +58,6 @@ exports.post = async (req, res, next) => {
         next()
       })
   })
-
 
 };
 // put = alterar ingred_receitas
@@ -82,6 +80,9 @@ exports.put = async (req, res, next) => {
       console.log(err);
       res.send('Erro ao tentar alterar ingrediente da receita');
     })
+    .finally(function () {
+      next()
+    })
 };
 exports.delete = async (req, res, next) => {
   let cod_ingred_receita = req.params.id;
@@ -96,5 +97,7 @@ exports.delete = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.send('Erro ao tentar deletar ingrediente da receita');
+  } finally {
+    next()
   }
 };

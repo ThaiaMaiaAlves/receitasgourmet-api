@@ -18,15 +18,16 @@ exports.get = async (req, res, next) => {
 // get by id
 // async = é uma função assíncrona 
 exports.getById = async (req, res, next) => {
-    const cod_receita = req.body.cod_receita;
+    const { id } = req.params;
+    
     try {
         const result = await
-            knex.select('*').from('receitas').where('cod_receita', cod_receita)
+            knex.select('*').from('receitas').where('cod_receita', id)
         res.json(result);
 
     } catch (err) {
         console.log(err);
-        res.status(500).send(`Erro ao buscar receita - ${cod_receita} `);
+        res.status(500).send(`Erro ao buscar receita - ${id} `);
     } finally {
         next()
     }
