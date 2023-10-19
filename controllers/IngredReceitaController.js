@@ -18,52 +18,51 @@ exports.get = async (req, res, next) => {
 // get by id
 // async = é uma função assíncrona 
 exports.getById = async (req, res, next) => {
-  const cod_ingred_receita = req.body.cod_ingred_receita;
+  const { id } = req?.params;
   try {
     const result = await
-      knex.select('*').from('ingred_receitas').where('cod_ingred_receita', cod_ingred_receita)
+      knex.select('*').from('ingred_receitas').where('cod_ingred_receita', id)
     res.json(result);
 
   } catch (err) {
     console.log(err);
-    res.send(`Erro ao buscar ingred_receitas - ${cod_ingred_receita} `);
+    res.send(`Erro ao buscar ingred_receitas - ${id} `);
   } finally {
     next()
   }
 };
 
 exports.post = async (req, res, next) => {
-  let ingred_receitas = req.body;
+  const ingred_receitas = req.body;
+  let result = []
 
-  ingred_receitas.ingredientes.map(item => {
-    knex.transaction(function (trx) {
-      knex('ingred_receitas')
-        .transacting(trx)
-        .insert({
-          cod_receita: ingred_receitas.cod_receita,
-          quantidade: item.quantidade,
-          cod_un_medida: item.cod_un_medida,
-          cod_ingrediente: item.cod_ingrediente
-        })
-        .then(trx.commit)
-        .catch(trx.rollback);
-    })
-      .then(function (result) {
-        res.send(result)
-      })
-      .catch(function (err) {
-        console.log(err);
-        res.send('Erro ao tentar inserir novo ingrediente na receita');
-      }).finally(function () {
-        next()
-      })
-  })
+  try {
+    for (const item of ingred_receitas.ingredientes) {
+      try {
+        const resUniq = await knex('ingred_receitas')
+          .insert({
+            cod_receita: ingred_receitas.cod_receita,
+            quantidade: item.quantidade,
+            cod_un_medida: item.cod_un_medida,
+            cod_ingrediente: item.cod_ingrediente
+          });
+        result.push(resUniq)
+      } catch (err) {
+        console.log('err', err);
+      }
+    }
+    res.json(result)
 
+  } catch (err) {
+      console.log(err);
+      res.status(500).send('Erro ao tentar inserir novo ingrediente');
+  }
 };
+
 // put = alterar ingred_receitas
 exports.put = async (req, res, next) => {
-  let ingred_receitas = req.body;
-  let cod_ingred_receita = req.params.id
+  let ingred_receitas = req?.body;
+  let cod_ingred_receita = req?.params?.id
 
   knex.transaction(function (trx) {
     knex('ingred_receitas')
