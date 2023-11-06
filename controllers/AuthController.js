@@ -27,7 +27,7 @@ const login = async (req, res) => {
         });
     }
 
-    const validaSenha = bcrypt.compareSync(senha, usuario.senha);
+    const validaSenha = senha === usuario.senha;
 
     if (!validaSenha) {
       return res
@@ -59,9 +59,7 @@ const login = async (req, res) => {
         statusCode: 500,
         message: err.message
       });
-  } finally {
-    next()
-  }
+  } 
 };
 
 const verifyToken = (req, res, next) => {
