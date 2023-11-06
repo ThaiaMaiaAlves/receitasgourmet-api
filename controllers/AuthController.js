@@ -1,6 +1,6 @@
 // instalação de 2 extensões para a autenticação
 // bcrypt jsonwebtoken
-// O bcrypt compara o senha e o jsonwebtoken é para criar um token de autenticação
+// O bcrypt compara o senha e o jsonwebtoken é para criar um token de autenticação.
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { knex } = require('../database');
